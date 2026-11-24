@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --text-scale: 1;
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: #e2e8f0;
+  --accent: #0284c7;
+}
+
+/* High-Contrast OLED Dark Theme (WCAG 2.1 AAA > 15:1 contrast) */
+html.theme-oled {
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --border-color: #38bdf8;
+  --accent: #38bdf8;
+}
+
+/* High-Contrast Solar Gold Theme (WCAG 2.1 AAA > 14.5:1 contrast) */
+html.theme-solar {
+  --bg-primary: #000000;
+  --bg-secondary: #0d0d0d;
+  --text-primary: #fef08a;
+  --text-secondary: #facc15;
+  --border-color: #eab308;
+  --accent: #facc15;
+}
+
+body {
+  font-size: calc(1rem * var(--text-scale, 1));
+  line-height: 1.6;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* WCAG AAA High-Visibility Focus Ring */
+:focus-visible {
+  outline: 3px solid #0284c7 !important;
+  outline-offset: 3px !important;
+}
+
+/* Screen reader skip link */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #0284c7;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  clip: auto;
+  white-space: normal;
+}
+
+/* Touch targets >= 44px to 64px for mobility accessibility */
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}

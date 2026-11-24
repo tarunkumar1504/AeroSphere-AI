@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+*.lock
+.env
+.env.local
+.env*.local
+*.log
+npm-debug.log*
+data/*.lock
+.DS_Store
+coverage/
