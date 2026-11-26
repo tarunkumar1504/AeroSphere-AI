@@ -61,15 +61,20 @@ export const IaqOptimizerView: React.FC<IaqOptimizerViewProps> = ({ outdoorAqi }
         {/* Room Parameters */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-200 dark:border-slate-800">
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="room-area-slider" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
               Room Area: {areaSqFt} sq ft
             </label>
             <input
+              id="room-area-slider"
               type="range"
               min="80"
               max="800"
               step="20"
               value={areaSqFt}
+              aria-label="Room Area in square feet"
+              aria-valuenow={areaSqFt}
+              aria-valuemin={80}
+              aria-valuemax={800}
               onChange={(e) => setAreaSqFt(Number(e.target.value))}
               className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer"
             />
@@ -79,12 +84,13 @@ export const IaqOptimizerView: React.FC<IaqOptimizerViewProps> = ({ outdoorAqi }
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="window-status-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
               Window Envelope Condition:
             </label>
             <select
+              id="window-status-select"
               value={windowStatus}
-              onChange={(e) => setWindowStatus(e.target.value as any)}
+              onChange={(e) => setWindowStatus(e.target.value as 'SEALED' | 'WEATHERSTRIPPED' | 'SINGLE_PANE_DRAFTY')}
               className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-medium touch-target"
             >
               <option value="SEALED">Sealed Double Glazing (Airtight)</option>

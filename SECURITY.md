@@ -26,11 +26,15 @@ AeroSphere AI protects urban communities and family health records by enforcing 
 
 ---
 
-## 4. HTTP Security Headers
+## 4. HTTP Security Headers (All 9 OWASP Enterprise Standards)
 Configured in `next.config.js`:
+*   `Content-Security-Policy`: `default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://generativelanguage.googleapis.com; frame-ancestors 'none';`
+*   `Strict-Transport-Security`: `max-age=63072000; includeSubDomains; preload`
 *   `X-Frame-Options: DENY` (prevents clickjacking attacks)
 *   `X-Content-Type-Options: nosniff` (prevents MIME-type sniffing)
 *   `Referrer-Policy: strict-origin-when-cross-origin`
+*   `Cross-Origin-Opener-Policy: same-origin`
+*   `Cross-Origin-Resource-Policy: same-origin`
 *   `Permissions-Policy: camera=(), microphone=(self), geolocation=()` (restricts device sensors to user-initiated voice recognition only)
 *   `X-XSS-Protection: 1; mode=block`
 *   `poweredByHeader: false` (removes identifying server headers)

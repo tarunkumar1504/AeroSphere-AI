@@ -11,6 +11,24 @@ interface VoiceCompanionModalProps {
   currentAqi: number;
 }
 
+interface SpeechRecognitionEventLike {
+  results: Array<{ 0: { transcript: string } }>;
+}
+
+interface SpeechRecognitionInstance {
+  lang: string;
+  interimResults: boolean;
+  onstart: (() => void) | null;
+  onend: (() => void) | null;
+  onerror: (() => void) | null;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  start: () => void;
+}
+
+interface SpeechRecognitionConstructor {
+  new (): SpeechRecognitionInstance;
+}
+
 export const VoiceCompanionModal: React.FC<VoiceCompanionModalProps> = ({
   isOpen,
   onClose,
@@ -36,7 +54,11 @@ export const VoiceCompanionModal: React.FC<VoiceCompanionModalProps> = ({
 
   const handleVoiceListen = () => {
     if (typeof window === 'undefined') return;
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const speechWindow = window as unknown as {
+      SpeechRecognition?: SpeechRecognitionConstructor;
+      webkitSpeechRecognition?: SpeechRecognitionConstructor;
+    };
+    const SpeechRecognition = speechWindow.SpeechRecognition || speechWindow.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       alert('Speech recognition is not supported in this browser. Please type your question.');
@@ -51,7 +73,7 @@ export const VoiceCompanionModal: React.FC<VoiceCompanionModalProps> = ({
     recognition.onend = () => setIsListening(false);
     recognition.onerror = () => setIsListening(false);
 
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: SpeechRecognitionEventLike) => {
       const transcript = event.results[0][0].transcript;
       setQuery(transcript);
       handleAsk(transcript);

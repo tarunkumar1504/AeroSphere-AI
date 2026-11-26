@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { CommunityAlertSchema } from '@/lib/validations/schemas';
 import { CommunityService } from '@/lib/services/community.service';
 import { RateLimitService } from '@/lib/services/rate-limit.service';
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
+    const body: unknown = await req.json();
     const validated = CommunityAlertSchema.parse(body);
 
     const alert = CommunityService.addAlert(
@@ -36,10 +37,11 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json(alert, { status: 201 });
-  } catch (err: any) {
-    if (err?.name === 'ZodError') {
+  } catch (err: unknown) {
+    if (err instanceof z.ZodError) {
       return NextResponse.json({ error: 'Invalid alert submission', details: err.errors }, { status: 400 });
     }
-    return NextResponse.json({ error: 'Failed to post community alert' }, { status: 500 });
+    const message = err instanceof Error ? err.message : 'Unknown internal error';
+    return NextResponse.json({ error: 'Failed to post community alert', message }, { status: 500 });
   }
 }

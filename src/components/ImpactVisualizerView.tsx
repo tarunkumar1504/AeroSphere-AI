@@ -39,14 +39,19 @@ export const ImpactVisualizerView: React.FC<ImpactVisualizerViewProps> = ({ outd
         {/* Sliders and choices */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="filtration-hours-slider" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
               Hours Indoors With Clean Air Filtration: {hoursFiltered} hrs/day
             </label>
             <input
+              id="filtration-hours-slider"
               type="range"
               min="0"
               max="24"
               value={hoursFiltered}
+              aria-label="Hours indoors with clean air filtration"
+              aria-valuenow={hoursFiltered}
+              aria-valuemin={0}
+              aria-valuemax={24}
               onChange={(e) => setHoursFiltered(Number(e.target.value))}
               className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer"
             />
@@ -58,12 +63,13 @@ export const ImpactVisualizerView: React.FC<ImpactVisualizerViewProps> = ({ outd
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="commute-shift-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
               Commute Mode Shift:
             </label>
             <select
+              id="commute-shift-select"
               value={commuteShift}
-              onChange={(e) => setCommuteShift(e.target.value as any)}
+              onChange={(e) => setCommuteShift(e.target.value as 'CAR_TO_METRO' | 'SOLO_CAR_TO_CARPOOL' | 'CAR_TO_CYCLE_INDOOR' | 'AVOIDED_COMMUTE_WFH' | 'NONE')}
               className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-medium touch-target"
             >
               <option value="CAR_TO_METRO">Shifted Solo ICE Car to Electric Metro / Train</option>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { IaqAssessmentSchema } from '@/lib/validations/schemas';
 import { IaqService } from '@/lib/services/iaq.service';
 import { RateLimitService } from '@/lib/services/rate-limit.service';
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
+    const body: unknown = await req.json();
     const validated = IaqAssessmentSchema.parse(body);
 
     const assessment = IaqService.assessRoom(
@@ -29,8 +30,8 @@ export async function POST(req: NextRequest) {
       assessment,
       diyGuides,
     });
-  } catch (err: any) {
-    if (err?.name === 'ZodError') {
+  } catch (err: unknown) {
+    if (err instanceof z.ZodError) {
       return NextResponse.json({ error: 'Validation error', details: err.errors }, { status: 400 });
     }
     return NextResponse.json({ error: 'Failed to assess indoor air quality' }, { status: 500 });

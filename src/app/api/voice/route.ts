@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { VoiceCompanionSchema } from '@/lib/validations/schemas';
 import { GeminiService } from '@/lib/services/gemini.service';
 import { RateLimitService } from '@/lib/services/rate-limit.service';
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
+    const body: unknown = await req.json();
     const validated = VoiceCompanionSchema.parse(body);
 
     const result = await GeminiService.queryVoiceCompanion(
@@ -21,10 +22,11 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json(result);
-  } catch (err: any) {
-    if (err?.name === 'ZodError') {
+  } catch (err: unknown) {
+    if (err instanceof z.ZodError) {
       return NextResponse.json({ error: 'Validation failed', details: err.errors }, { status: 400 });
     }
-    return NextResponse.json({ error: 'Voice assistant failed' }, { status: 500 });
+    const message = err instanceof Error ? err.message : 'Unknown internal error';
+    return NextResponse.json({ error: 'Voice assistant failed', message }, { status: 500 });
   }
 }

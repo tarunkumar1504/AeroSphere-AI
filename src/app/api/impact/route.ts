@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { ImpactCalculateSchema } from '@/lib/validations/schemas';
 import { ImpactService } from '@/lib/services/impact.service';
 import { RateLimitService } from '@/lib/services/rate-limit.service';
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
+    const body: unknown = await req.json();
     const validated = ImpactCalculateSchema.parse(body);
 
     const impact = ImpactService.calculate({
@@ -23,8 +24,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(impact);
-  } catch (err: any) {
-    if (err?.name === 'ZodError') {
+  } catch (err: unknown) {
+    if (err instanceof z.ZodError) {
       return NextResponse.json({ error: 'Invalid impact parameters', details: err.errors }, { status: 400 });
     }
     return NextResponse.json({ error: 'Failed to calculate impact' }, { status: 500 });

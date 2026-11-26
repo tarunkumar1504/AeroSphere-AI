@@ -281,10 +281,11 @@ export default function Home() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Relation</label>
+                <label htmlFor="member-relation-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Relation</label>
                 <select
+                  id="member-relation-select"
                   value={newMemberRelation}
-                  onChange={(e) => setNewMemberRelation(e.target.value as any)}
+                  onChange={(e) => setNewMemberRelation(e.target.value as FamilyMember['relation'])}
                   className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm touch-target"
                 >
                   <option value="CHILD">Child</option>
@@ -309,10 +310,11 @@ export default function Home() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Health Vulnerability</label>
+                <label htmlFor="member-vulnerability-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Health Vulnerability</label>
                 <select
+                  id="member-vulnerability-select"
                   value={newMemberVulnerability}
-                  onChange={(e) => setNewMemberVulnerability(e.target.value as any)}
+                  onChange={(e) => setNewMemberVulnerability(e.target.value as FamilyMember['vulnerabilities'][number])}
                   className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm touch-target"
                 >
                   <option value="ASTHMA">Asthma / Bronchial Hyperreactivity</option>

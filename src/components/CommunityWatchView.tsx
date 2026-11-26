@@ -4,9 +4,16 @@ import React, { useState, useEffect } from 'react';
 import { Users, ThumbsUp, PlusCircle, CheckCircle2 } from 'lucide-react';
 import { CommunityAlert } from '@/lib/types';
 
+interface CommunityMetrics {
+  activeAlertsCount: number;
+  cleanAirSheltersCount: number;
+  carpoolPledgesCount: number;
+  totalNeighborhoodsCovered: number;
+}
+
 export const CommunityWatchView: React.FC = () => {
   const [alerts, setAlerts] = useState<CommunityAlert[]>([]);
-  const [metrics, setMetrics] = useState<any>(null);
+  const [metrics, setMetrics] = useState<CommunityMetrics | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
 
   // Form state
@@ -213,10 +220,11 @@ export const CommunityWatchView: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Action Category</label>
+                <label htmlFor="action-category-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Action Category</label>
                 <select
+                  id="action-category-select"
                   value={type}
-                  onChange={(e) => setType(e.target.value as any)}
+                  onChange={(e) => setType(e.target.value as CommunityAlert['type'])}
                   className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm touch-target"
                 >
                   <option value="OPEN_BURNING_REPORT">Open Burning & Smog Hazard Report</option>

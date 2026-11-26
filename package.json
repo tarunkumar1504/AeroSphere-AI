@@ -9,7 +9,10 @@
     "start": "next start",
     "lint": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:api": "vitest run src/lib/__tests__/api-routes.test.ts",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:watch": "vitest",
+    "verify": "node scripts/verify-http.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",

@@ -5,12 +5,13 @@ AeroSphere AI adheres to Clean Architecture and SOLID design principles, maintai
 
 *   `src/app/` — Next.js 16 App Router pages, layouts, and RESTful API route handlers (`/api/air-quality`, `/api/routine`, `/api/iaq`, `/api/impact`, `/api/community`, `/api/family`, `/api/voice`, `/api/audit`).
 *   `src/components/` — Modular, atomic React components (Navbar, SmogForecastBanner, RoutinePlannerView, IaqOptimizerView, ImpactVisualizerView, CommunityWatchView, VoiceCompanionModal, SecurityAuditModal).
-*   `src/lib/types/` — Comprehensive domain models, strict TypeScript interfaces, and enums.
+*   `src/lib/types/` — Comprehensive domain models, strict TypeScript interfaces, and enums. Zero `any` types used across the entire codebase.
 *   `src/lib/services/` — Pure business logic services (`AirQualityService`, `RoutineService`, `IaqService`, `ImpactService`, `CommunityService`, `GeminiService`, `RateLimitService`).
 *   `src/lib/validations/` — Strict Zod runtime validation schemas for all inbound client requests.
 *   `src/lib/db/` — ACID-compliant persistent JSON engine with atomic writes, temporary-file renaming, and in-memory caching.
 *   `src/lib/utils/` — Input sanitization and prompt injection defense utilities.
-*   `src/lib/__tests__/` — Comprehensive Vitest automated test suites ensuring zero regression.
+*   `src/lib/__tests__/` — Comprehensive Vitest automated test suites (32 tests across 8 suites) ensuring zero regression.
+*   `scripts/` — Automated verification and smoke test utilities (`verify-http.mjs`).
 
 ---
 

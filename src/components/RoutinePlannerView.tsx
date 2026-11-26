@@ -87,12 +87,13 @@ export const RoutinePlannerView: React.FC<RoutinePlannerViewProps> = ({
         {/* Commute and Purification toggles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="commute-mode-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
               Primary Commute Mode:
             </label>
             <select
+              id="commute-mode-select"
               value={commuteMode}
-              onChange={(e) => setCommuteMode(e.target.value as any)}
+              onChange={(e) => setCommuteMode(e.target.value as 'CAR' | 'METRO' | 'BUS' | 'BIKE' | 'WALK')}
               className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-medium touch-target"
             >
               <option value="METRO">Electric Metro / Rapid Transit</option>
@@ -149,7 +150,7 @@ export const RoutinePlannerView: React.FC<RoutinePlannerViewProps> = ({
 
       {/* Generated Routine Results */}
       {plan && (
-        <div className="space-y-6">
+        <div aria-live="polite" className="space-y-6">
           {/* Summary & Impact Banner */}
           <div className="p-6 rounded-2xl bg-gradient-to-r from-sky-50 to-indigo-50 dark:from-sky-950/40 dark:to-indigo-950/40 border border-sky-200 dark:border-sky-800">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
