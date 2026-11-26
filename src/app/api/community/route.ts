@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(alert, { status: 201 });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Invalid alert submission', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid alert submission', details: err.issues }, { status: 400 });
     }
     const message = err instanceof Error ? err.message : 'Unknown internal error';
     return NextResponse.json({ error: 'Failed to post community alert', message }, { status: 500 });

@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation error', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Validation error', details: err.issues }, { status: 400 });
     }
     return NextResponse.json({ error: 'Failed to assess indoor air quality' }, { status: 500 });
   }

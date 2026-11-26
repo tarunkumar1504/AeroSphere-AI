@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result);
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
     }
     const message = err instanceof Error ? err.message : 'Unknown internal error';
     return NextResponse.json({ error: 'Voice assistant failed', message }, { status: 500 });

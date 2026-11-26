@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(impact);
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Invalid impact parameters', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid impact parameters', details: err.issues }, { status: 400 });
     }
     return NextResponse.json({ error: 'Failed to calculate impact' }, { status: 500 });
   }

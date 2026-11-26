@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(plan);
   } catch (err: unknown) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Invalid input parameters', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid input parameters', details: err.issues }, { status: 400 });
     }
     const message = err instanceof Error ? err.message : 'Unknown internal error';
     return NextResponse.json({ error: 'Failed to generate routine plan', message }, { status: 500 });
